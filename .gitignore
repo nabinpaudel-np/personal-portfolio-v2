@@ -34,3 +34,7 @@ next-env.d.ts
 /codes.md
 /AboutProject.md
 
+# Next.js 16 auto-generated AI agent docs (do not commit)
+/AGENTS.md
+/CLAUDE.md
+

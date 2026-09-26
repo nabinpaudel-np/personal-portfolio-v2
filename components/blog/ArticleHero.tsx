@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { PostMeta } from "@/lib/content";
+import Container from "@/components/layout/Container";
 
 export default function ArticleHero({ post }: { post: PostMeta }) {
   const formattedDate = new Date(post.date).toLocaleDateString("en-US", {
@@ -9,7 +10,7 @@ export default function ArticleHero({ post }: { post: PostMeta }) {
   });
   return (
     <section className="w-full border-b border-border-frame bg-surface">
-      <div className="max-w-[1380px] mx-auto px-6 lg:px-12 pt-10 pb-8">
+      <Container className="pt-10 pb-8">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-8 border-b border-border-frame">
           <Link
             href="/blogs"
@@ -90,7 +91,7 @@ export default function ArticleHero({ post }: { post: PostMeta }) {
             </div>
           </div>
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import { SITE_URL, SITE_NAME, SITE_TAGLINE } from "@/lib/site";
 import "@fontsource-variable/inter/index.css";
 import "@fontsource-variable/jetbrains-mono/index.css";
 import "@fontsource/righteous/400.css";
@@ -8,9 +9,17 @@ import "@fontsource/righteous/index.css";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Nabin Paudel — Technical PM & Builder",
-  description:
-    "Technical Project Manager, Systems Architect, and Builder crafting institutional-grade software solutions.",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: `${SITE_NAME} — Technical PM & Builder`,
+    template: `%s — ${SITE_NAME}`,
+  },
+  description: SITE_TAGLINE,
+  openGraph: {
+    siteName: SITE_NAME,
+    type: "website",
+    locale: "en_US",
+  },
 };
 
 export default function RootLayout({

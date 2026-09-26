@@ -1,7 +1,14 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { getAllCaseStudies } from "@/lib/content";
 import Container from "@/components/layout/Container";
 import Kicker from "@/components/ui/Kicker";
+
+export const metadata: Metadata = {
+  title: "Case Studies",
+  description:
+    "Structured case studies: the obstacle, the resolution, the receipts. Edit a .md file to update.",
+};
 
 export default function CaseStudiesPage() {
   const studies = getAllCaseStudies();

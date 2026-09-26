@@ -1,11 +1,12 @@
 import Link from "next/link";
 import type { PostMeta } from "@/lib/content";
+import Container from "@/components/layout/Container";
 
 export default function NextReads({ posts }: { posts: PostMeta[] }) {
   if (posts.length === 0) return null;
   return (
     <section className="w-full bg-surface border-t border-border-frame">
-      <div className="max-w-[1380px] mx-auto px-6 lg:px-12 py-16">
+      <Container className="py-16">
         <div className="flex items-center justify-between pb-6 mb-8 border-b border-border-frame">
           <span className="font-label-md text-label-md uppercase tracking-widest text-primary font-bold">
             NEXT READS // CONTINUE THE SYSTEM
@@ -39,7 +40,7 @@ export default function NextReads({ posts }: { posts: PostMeta[] }) {
             </Link>
           ))}
         </div>
-      </div>
+      </Container>
     </section>
   );
 }

@@ -1,6 +1,3 @@
-"use client";
-
-import { useEffect, useRef } from "react";
 import Container from "../layout/Container";
 import Kicker from "../ui/Kicker";
 
@@ -40,39 +37,6 @@ const BLOCKS = [
 ];
 
 export default function WhatIDo() {
-  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const overlayRefs = useRef<(HTMLDivElement | null)[]>([]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      const stickyOffset = 80;
-      const fadeDistance = 400;
-
-      cardRefs.current.forEach((el, i) => {
-        if (!el || i >= cardRefs.current.length - 1) return;
-        const nextCard = cardRefs.current[i + 1];
-        if (!nextCard) return;
-        const nextCardTop = nextCard.getBoundingClientRect().top + scrollY;
-        const fadeStart = nextCardTop - stickyOffset - fadeDistance;
-        const progress = Math.max(0, Math.min(1, (scrollY - fadeStart) / fadeDistance));
-        el.style.opacity = String(1 - progress);
-        const overlay = overlayRefs.current[i];
-        if (overlay) {
-          overlay.style.opacity = String(progress * 0.35);
-        }
-      });
-    };
-
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    window.addEventListener("resize", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      window.removeEventListener("resize", handleScroll);
-    };
-  }, []);
-
   return (
     <section className="w-full border-b border-border-frame">
       <Container className="py-space-2xl">
@@ -88,23 +52,17 @@ export default function WhatIDo() {
           </p>
         </div>
 
-        <div className="relative">
+        <div className="whatido-stack relative">
           {BLOCKS.map((b, i) => (
             <div
               key={b.id}
-              ref={(el) => {
-                cardRefs.current[i] = el;
-              }}
-              className="sticky top-20 transition-opacity duration-300 ease-out"
+              className="whatido-card sticky top-20"
               style={{ zIndex: i + 1 }}
             >
               <div className="relative border border-border-frame p-8 lg:p-10 bg-surface flex flex-col justify-between mb-space-lg overflow-hidden">
                 <div
-                  ref={(el) => {
-                    overlayRefs.current[i] = el;
-                  }}
-                  className="absolute inset-0 bg-on-surface pointer-events-none transition-opacity duration-300 ease-out"
-                  style={{ opacity: 0 }}
+                  className="whatido-overlay absolute inset-0 bg-on-surface pointer-events-none"
+                  aria-hidden="true"
                 />
                 <div>
                   <div className="flex items-center justify-between pb-4 border-b border-border-frame mb-6">

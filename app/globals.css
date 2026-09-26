@@ -1,3 +1,9 @@
+@property --trace-deg {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -96,4 +102,73 @@
 
 .prose-mdx a {
   @apply text-on-surface underline underline-offset-4 hover:bg-tertiary-fixed transition-none;
+}
+
+/* Receipts section: scroll-driven conic trace overlay */
+.receipts-section {
+  --trace-deg: 0deg;
+}
+
+.receipts-section .receipts-trace {
+  background: conic-gradient(
+    from var(--trace-deg),
+    transparent 0deg,
+    transparent 300deg,
+    rgba(177, 247, 53, 0.35) 340deg,
+    rgba(177, 247, 53, 0.85) 360deg
+  );
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  -webkit-mask-composite: xor;
+  padding: 1px;
+  animation: receipts-trace-spin linear both;
+  animation-timeline: view();
+  animation-range: cover 0% cover 100%;
+}
+
+@keyframes receipts-trace-spin {
+  to {
+    --trace-deg: 360deg;
+  }
+}
+
+/* WhatIDo sticky stack: fade cards as they leave the viewport */
+.whatido-stack .whatido-card {
+  opacity: 1;
+  transition: opacity 0.3s linear;
+}
+
+@keyframes whatido-fade {
+  0%,
+  100% {
+    opacity: 1;
+  }
+}
+
+.whatido-stack .whatido-overlay {
+  opacity: 0;
+  animation: whatido-overlay-fill linear both;
+  animation-timeline: view();
+  animation-range: contain 0% contain 100%;
+}
+
+@keyframes whatido-overlay-fill {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 0.08;
+  }
+}
+
+@supports not (animation-timeline: view()) {
+  .receipts-section .receipts-trace {
+    animation: none;
+    background: linear-gradient(135deg, rgba(177, 247, 53, 0.4), transparent 60%);
+  }
+
+  .whatido-stack .whatido-overlay {
+    animation: none;
+    opacity: 0.05;
+  }
 }
